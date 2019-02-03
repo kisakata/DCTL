@@ -1,0 +1,27 @@
+typedef struct
+{
+    float c00, c01, c02;
+    float c10, c11, c12;
+    float c20, c21, c22;
+} Matrix;
+
+__DEVICE__ float3 transform(int p_Width, int p_Height, int p_X, int p_Y, float p_R, float p_G, float p_B)
+{
+    Matrix mat;
+    mat.c00 = 0.43295157;
+    mat.c01 = 0.3753846;
+    mat.c02 = 0.18934974;
+    mat.c10 = 0.08941748;
+    mat.c11 = 0.81653354;
+    mat.c12 = 0.10300659;
+    mat.c20 = 0.01916264;
+    mat.c21 = 0.11815214;
+    mat.c22 = 0.94207604;
+
+    float3 result;
+    result.x = (mat.c00 * p_R) + (mat.c01 * p_G) + (mat.c02 * p_B);
+    result.y = (mat.c10 * p_R) + (mat.c11 * p_G) + (mat.c12 * p_B);
+    result.z = (mat.c20 * p_R) + (mat.c21 * p_G) + (mat.c22 * p_B);
+
+    return result;
+}
